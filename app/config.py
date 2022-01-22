@@ -26,11 +26,12 @@ class Production(Config):
     VCAP_APPLICATION = ENV.get("VCAP_APPLICATION")
     VCAP_SERVICES = ENV.get("VCAP_SERVICES")
 
-    DATABASE_HOST = VCAP_SERVICES["aws-rds"][0]["credentials"]["host"]
-    DATABASE_USERNAME = VCAP_SERVICES["aws-rds"][0]["credentials"]["username"]
-    DATABASE_PASSWORD = VCAP_SERVICES["aws-rds"][0]["credentials"]["password"]
-    DATABASE_NAME = VCAP_SERVICES["aws-rds"][0]["credentials"]["db_name"]
-    DATABASE_URI = f"mysql+pymysql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{DATABASE_HOST}:3306/{DATABASE_NAME}"
+    if VCAP_SERVICES:
+        DATABASE_HOST = VCAP_SERVICES["aws-rds"][0]["credentials"]["host"]
+        DATABASE_USERNAME = VCAP_SERVICES["aws-rds"][0]["credentials"]["username"]
+        DATABASE_PASSWORD = VCAP_SERVICES["aws-rds"][0]["credentials"]["password"]
+        DATABASE_NAME = VCAP_SERVICES["aws-rds"][0]["credentials"]["db_name"]
+        DATABASE_URI = f"mysql+pymysql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{DATABASE_HOST}:3306/{DATABASE_NAME}"
 
     REDIRECT_URI = "https://template-flask-usmc.app.cloud.gov/auth/callback"
     LOGOUT_REDIRECT_URI = "https://template-flask-usmc.app.cloud.gov/"

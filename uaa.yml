@@ -12,9 +12,7 @@ oauth:
       authorized-grant-types: authorization_code,refresh_token
       scope: openid
       authorities: uaa.none
-      redirect-uri: 
-        - http://localhost:8000/auth/callback
-        - http://localhost:8000/
+      redirect-uri: http://localhost:8000/auth/callback
 
 scim:
   username_pattern: '[a-z0-9+\-_.@]+'
