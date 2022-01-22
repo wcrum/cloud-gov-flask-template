@@ -2,3 +2,8 @@
 
 # Flask Template
 Template intended for use at cloud.gov
+
+# Important Links
+- https://cloud.gov/docs - Primary Documentation for cloud.gov
+- https://github.com/cloud-gov/cg-demos - Demos for cloud.gov applications
+
