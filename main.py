@@ -8,10 +8,12 @@ from app.routes import default
 from app.routes import debug
 from app.routes import auth
 
+from sqlmodel import create_engine
+
 APP_SETTINGS = os.getenv("APP_SETTINGS", "Testing")
 
-def create_app():
 
+def create_app():
     app = Flask(
         __name__, 
         template_folder="app/templates/", 
@@ -29,6 +31,7 @@ def create_app():
     return app
 
 app = create_app()
+engine = create_engine(app.config.get("DATABASE_URI"))
 
 if __name__ == "__main__":
     app.run(
