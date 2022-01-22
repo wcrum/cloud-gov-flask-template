@@ -1,0 +1,33 @@
+<header class="p-3 mb-3 border-bottom">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a class="navbar-brand" href="#">Template Flask</a>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+            </ul>
+
+            {% if session.authenticated %}
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg width="32" height="32" data-jdenticon-value="{{ session.claims['email'] }}"></svg>
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><h6 class="dropdown-header">{{ session.claims['email'] }}</h6></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/auth/logout">Sign out</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <div class="col-md-3 text-end">
+                <a class="btn btn-outline-primary" href="/auth/login" role="button">Login</a>
+                <a class="btn btn-primary" href="https://cloud.gov/sign-up/" role="button">Signup</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</header>

@@ -12,7 +12,12 @@ APP_SETTINGS = os.getenv("APP_SETTINGS", "Testing")
 
 def create_app():
 
-    app = Flask(__name__)
+    app = Flask(
+        __name__, 
+        template_folder="app/templates/", 
+        static_folder="app/static/"
+    )
+    
     app.config.from_object(f'app.config.{APP_SETTINGS}')
     app.secret_key = os.urandom(256)
     app.url_map.strict_slashes = False
