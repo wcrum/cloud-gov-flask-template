@@ -3,7 +3,6 @@ This project covers documenting the process of setting up a python + flask proje
 
 We will be using cloud.gov Identity Provider (IDP) and an Amazon Webservice Relational Database Service (AWS RDS).
 
-## Cloud Foundry Setup
 
 ### Setup
 Our primary application will be called `template-flask` it will be using `template-flask-uaa` which is connected to cloud.gov IDP and `template-flask-db` which is the RDS.
@@ -48,4 +47,15 @@ Reading the documentation provided by cloud.gov you need to ensure your applicat
 }
 >>> cf set-env template-flask client_id 12345678-1234-1234-1234-12345672890
 >>> cf set-env template-flask client_secret 1234567890qwertyuiopasdfghjkl
+```
+
+
+## Testing Environment Setup
+If you are trying to run locally vs in production you need to ensure that all of the connected routes and redirect_uris are properly set for the seperate environments.
+
+### Local UAA
+```
+docker run -d --name uaa-uaa -p 8080:8080 \
+  -e UAA_CONFIG_URL=/path/to/uaa/file.yml \
+  hortonworks/cloudbreak-uaa:3.6.3
 ```

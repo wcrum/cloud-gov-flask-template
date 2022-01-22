@@ -8,7 +8,7 @@ applications:
   buildpack: python_buildpack
   command: gunicorn main:app -b :8080
   env:
-    APP_SETTINGS: Development
+    APP_SETTINGS: Production
   services:
     - name: template-flask-uaa
     - name: template-flask-db

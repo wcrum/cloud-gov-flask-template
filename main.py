@@ -1,6 +1,8 @@
 import os
 from flask import Flask
 
+import os
+import requests
 from app import config
 from app.routes import default
 from app.routes import debug
@@ -12,7 +14,7 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_object(f'app.config.{APP_SETTINGS}')
-    print(app.config)
+    app.secret_key = os.urandom(256)
     app.url_map.strict_slashes = False
 
     app.register_blueprint(default.bp)

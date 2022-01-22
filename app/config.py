@@ -7,14 +7,21 @@ class Config(object):
 class Production(Config):
     PORT = 8080
 
-class Development(Config):
     CLIENT_ID = os.getenv("client_id")
+    CLIENT_SECRET = os.getenv("client_secret")
     REDIRECT_URI = urllib.parse.quote("https://template-flask-usmc.app.cloud.gov/auth/callback")
-    # state is an important to prevent CSRF, this is temporyr
-    UAA_LOGIN = f"https://login.fr.cloud.gov/oauth/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri={REDIRECT_URI}&state=9ab894ad91d99eb9ee4b30ea7f02b9d8e43eb15db58ff93e4894f3b49817d7ab"
 
-    PORT = 8080
+    UAA_AUTHORIZE_URI = "https://login.fr.cloud.gov/oauth/authorize"
+    UAA_TOKEN_URI = "https://uaa.fr.cloud.gov/oauth/token"
+
+    # state is an important to prevent CSRF, this is temporyr
 
 class Testing(Config):
     TESTING = True
     PORT = 5000
+
+    CLIENT_ID = "my_client_id"
+    CLIENT_SECRET = "my_client_secret"
+    REDIRECT_URI = urllib.parse.quote(f"https://localhost:{PORT}/auth/callback")
+    UAA_AUTHORIZE_URI = "http://localhost:8080/oauth/authorize"
+    UAA_TOKEN_URI = "http://localhost:8080/oauth/token"
