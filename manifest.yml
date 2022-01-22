@@ -3,7 +3,7 @@ version: 1
 applications:
 - name: template-flask-usmc
   memory: 128MB
-  disk_quota: 256MB
+  disk_quota: 512MB
   random-route: true
   buildpack: python_buildpack
   command: gunicorn main:app -b :8080

@@ -56,6 +56,6 @@ If you are trying to run locally vs in production you need to ensure that all of
 ### Local UAA
 ```
 docker run -d --name uaa-uaa -p 8080:8080 \
-  -e UAA_CONFIG_URL=/path/to/uaa/file.yml \
+  -e UAA_CONFIG_URL=https://raw.githubusercontent.com/18F/cg-demos/master/cg-identity/uaa.yml \
   hortonworks/cloudbreak-uaa:3.6.3
 ```

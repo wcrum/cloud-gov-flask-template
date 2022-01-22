@@ -1,4 +1,5 @@
 import os
+import jwt
 import requests
 from flask import Blueprint
 from flask import request
@@ -24,13 +25,25 @@ def login():
     
     return redirect(UAA_LOGIN)
 
+@bp.route('/logout')
+def logout():
+    CLIENT_ID = current_app.config["CLIENT_ID"]
+    REDIRECT_URI = current_app.config["REDIRECT_URI"]
+    UAA_LOGOUT_URI = current_app.config["UAA_LOGOUT_URI"]
+    UAA_LGOUT = f"{UAA_LOGOUT_URI}?client_id={CLIENT_ID}&redirect={REDIRECT_URI}"
+
+    session.clear()
+    requests.post(UAA_LGOUT)
+    
+    return redirect("/")
+
 @bp.route('/callback')
 def callback():
     # @url_param {string} code
     # @url_param {string} status
     code = request.args.get('code')
     state = request.args.get('state')
-
+    
     UAA_TOKEN_URI = current_app.config["UAA_TOKEN_URI"]
 
     data = {
@@ -41,11 +54,18 @@ def callback():
         "client_secret": current_app.config["CLIENT_SECRET"],
         "redirect_uri": current_app.config["REDIRECT_URI"]
     }
-    print(data)
 
     response = requests.post(
         UAA_TOKEN_URI,
         data = data
-    )
-    
-    print(response)
+    ).json()
+
+    token = response["access_token"]
+    header = jwt.get_unverified_header(token)
+
+    session["claims"] = jwt.decode(token, header["alg"], options={"verify_signature": False})
+    session["expiry"] = response["expires_in"]
+    session["refresh_token"] = response["refresh_token"]
+    session["authenticated"] = True
+
+    return redirect('/')
