@@ -2,7 +2,7 @@
 version: 1
 applications:
 - name: template-flask-usmc
-  memory: 128MB
+  memory: 2GB
   disk_quota: 512MB
   random-route: true
   buildpack: python_buildpack
