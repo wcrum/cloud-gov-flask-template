@@ -16,14 +16,11 @@ from app.models.user import Log, User
 
 APP_SETTINGS = os.getenv("APP_SETTINGS", "Testing")
 
+
 def create_app():
-    app = Flask(
-        __name__, 
-        template_folder="app/templates/", 
-        static_folder="app/static/"
-    )
-    
-    app.config.from_object(f'app.config.{APP_SETTINGS}')
+    app = Flask(__name__, template_folder="app/templates/", static_folder="app/static/")
+
+    app.config.from_object(f"app.config.{APP_SETTINGS}")
     app.secret_key = os.urandom(256)
     app.url_map.strict_slashes = False
 
@@ -32,19 +29,17 @@ def create_app():
     app.register_blueprint(auth.bp, url_prefix="/auth")
     app.register_blueprint(log.bp, url_prefix="/admin")
 
-    
     return app
+
 
 app = create_app()
 app.pages = create_pages()
 with app.app_context():
     from app.database import engine
+
     app.engine = engine
 
 SQLModel.metadata.create_all(engine)
 
 if __name__ == "__main__":
-    app.run(
-        host = app.config.get("HOST"),
-        port = app.config.get("PORT")
-    )
+    app.run(host=app.config.get("HOST"), port=app.config.get("PORT"))

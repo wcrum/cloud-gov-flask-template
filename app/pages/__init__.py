@@ -1,11 +1,10 @@
 import os
 import markdown2
 
-pages = {
-    "/": []
-}
+pages = {"/": []}
 
 pages_path = os.path.dirname(os.path.realpath(__file__))
+
 
 class Pages:
     def __init__(self):
@@ -14,13 +13,17 @@ class Pages:
     def add_page(self, page):
         self.routes[page.meta["base_url"]] = page
 
+
 class Page:
     def __init__(self, filename, contents):
         self.filename = filename
         self.contents = contents
-        self.html = markdown2.markdown(self.contents, extras=["tables", "metadata", "fenced-code-blocks"])
+        self.html = markdown2.markdown(
+            self.contents, extras=["tables", "metadata", "fenced-code-blocks"]
+        )
         self.meta = self.html.metadata
         print(self.meta)
+
 
 def create_pages():
     _pages = Pages()

@@ -2,6 +2,7 @@ import os
 import urllib
 import json
 
+
 def decode_env(env):
     _env = {}
     for k, v in env.items():
@@ -14,10 +15,12 @@ def decode_env(env):
                 _env[k] = str(v)
     return _env
 
+
 class Config(object):
-    
+
     APP_DIRECTORY = os.getcwd() + "/app"
     TESTING = False
+
 
 class Production(Config):
     PORT = 8080
@@ -40,6 +43,7 @@ class Production(Config):
     UAA_AUTHORIZE_URI = "https://login.fr.cloud.gov/oauth/authorize"
     UAA_LOGOUT_URI = "https://login.fr.cloud.gov/logout"
     UAA_TOKEN_URI = "https://uaa.fr.cloud.gov/oauth/token"
+
 
 class Testing(Config):
     TESTING = True

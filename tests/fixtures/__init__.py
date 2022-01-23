@@ -3,6 +3,7 @@ import tempfile
 import pytest
 from main import create_app
 
+
 @pytest.fixture
 def client():
     app = create_app()

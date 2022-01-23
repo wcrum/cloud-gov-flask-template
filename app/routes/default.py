@@ -11,7 +11,8 @@ from flask import abort
 from werkzeug.exceptions import HTTPException
 from flask import json
 
-bp = Blueprint('index', __name__)
+bp = Blueprint("index", __name__)
+
 
 @bp.route("/")
 @bp.route("/<path:path>")
@@ -19,11 +20,12 @@ def handle_posts(*args, **kwgs):
     if request.path in current_app.pages.routes:
         return render_template(
             "page.html",
-            session = session,
-            markdown = current_app.pages.routes[request.path].html
+            session=session,
+            markdown=current_app.pages.routes[request.path].html,
         )
 
     abort(404)
+
 
 @bp.before_request
 def before_request():
@@ -37,42 +39,41 @@ def before_request():
                 "grant_type": "refresh_token",
                 "refresh_token": session.get("refresh_token"),
                 "client_id": current_app.config["CLIENT_ID"],
-                "client_secret": current_app.config["CLIENT_SECRET"]
+                "client_secret": current_app.config["CLIENT_SECRET"],
             }
 
-            response = requests.post(
-                UAA_TOKEN_URI,
-                data = data
-            ).json()
+            response = requests.post(UAA_TOKEN_URI, data=data).json()
 
             token = response["access_token"]
             header = jwt.get_unverified_header(token)
 
-            session["claims"] = jwt.decode(token, header["alg"], options={"verify_signature": False})
+            session["claims"] = jwt.decode(
+                token, header["alg"], options={"verify_signature": False}
+            )
             session["expiry"] = time.time() + (response["expires_in"] * 1000)
             session["refresh_token"] = response["refresh_token"]
             session["authenticated"] = True
 
+
 @bp.after_request
 def after_request(response):
-    print(session.get("expiry"), flush = True)
+    print(session.get("expiry"), flush=True)
     return response
 
 
 @bp.app_errorhandler(HTTPException)
 def handle_exception(e):
-    if (handle_error:= request.headers.get("X-Error-Type")) == "JSON":
+    if (handle_error := request.headers.get("X-Error-Type")) == "JSON":
         response = e.get_response()
         # replace the body with JSON
-        response.data = json.dumps({
-            "code": e.code,
-            "name": e.name,
-            "description": e.description,
-        })
+        response.data = json.dumps(
+            {
+                "code": e.code,
+                "name": e.name,
+                "description": e.description,
+            }
+        )
         response.content_type = "application/json"
         return response, e.code
     else:
-        return render_template(
-            "error.html",
-            error = e
-        )
+        return render_template("error.html", error=e)

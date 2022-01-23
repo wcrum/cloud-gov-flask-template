@@ -11,9 +11,10 @@ from flask import session
 from urllib.parse import unquote
 from base64 import b64encode
 
-bp = Blueprint('auth', __name__)
+bp = Blueprint("auth", __name__)
 
-@bp.route('/login')
+
+@bp.route("/login")
 def login():
     CLIENT_ID = current_app.config["CLIENT_ID"]
     REDIRECT_URI = current_app.config["REDIRECT_URI"]
@@ -23,10 +24,11 @@ def login():
     session["USER_STATE"] = USER_STATE
 
     UAA_LOGIN = f"{UAA_AUTHORIZE_URI}?client_id={CLIENT_ID}&response_type=code&redirect_uri={REDIRECT_URI}&state={USER_STATE}"
-    
+
     return redirect(UAA_LOGIN)
 
-@bp.route('/logout')
+
+@bp.route("/logout")
 def logout():
     CLIENT_ID = current_app.config["CLIENT_ID"]
     REDIRECT_URI = current_app.config["REDIRECT_URI"]
@@ -35,16 +37,17 @@ def logout():
 
     session.clear()
     requests.post(UAA_LGOUT)
-    
+
     return redirect("/")
 
-@bp.route('/callback')
+
+@bp.route("/callback")
 def callback():
     # @url_param {string} code
     # @url_param {string} status
-    code = request.args.get('code')
-    state = request.args.get('state')
-    
+    code = request.args.get("code")
+    state = request.args.get("state")
+
     UAA_TOKEN_URI = current_app.config["UAA_TOKEN_URI"]
 
     data = {
@@ -53,20 +56,19 @@ def callback():
         "response_type": "token",
         "client_id": current_app.config["CLIENT_ID"],
         "client_secret": current_app.config["CLIENT_SECRET"],
-        "redirect_uri": current_app.config["REDIRECT_URI"]
+        "redirect_uri": current_app.config["REDIRECT_URI"],
     }
 
-    response = requests.post(
-        UAA_TOKEN_URI,
-        data = data
-    ).json()
+    response = requests.post(UAA_TOKEN_URI, data=data).json()
 
     token = response["access_token"]
     header = jwt.get_unverified_header(token)
 
-    session["claims"] = jwt.decode(token, header["alg"], options={"verify_signature": False})
+    session["claims"] = jwt.decode(
+        token, header["alg"], options={"verify_signature": False}
+    )
     session["expiry"] = time.time() + (response["expires_in"] * 1000)
     session["refresh_token"] = response["refresh_token"]
     session["authenticated"] = True
 
-    return redirect('/')
+    return redirect("/")
