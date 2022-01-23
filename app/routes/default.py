@@ -12,13 +12,33 @@ bp = Blueprint('index', __name__)
 
 @bp.route('/')
 def index():
-    print(session)
     return render_template("index.html", 
         sesssion = session
     )
 
+@bp.before_request
+def before_request():
+    if session.get("expiry"):
+        if time.time() > session.get("expiry"):
+            # @url_param {string} code
+            # @url_param {string} status
+            UAA_TOKEN_URI = current_app.config["UAA_TOKEN_URI"]
+
+            data = {
+                "grant_type": "refresh_token",
+                "refresh_token": session.get("refresh_token"),
+                "client_id": current_app.config["CLIENT_ID"],
+                "client_secret": current_app.config["CLIENT_SECRET"]
+            }
+
+            response = requests.post(
+                UAA_TOKEN_URI,
+                data = data
+            ).json()
+
 @bp.after_request
 def after_request(response):
+    print(session.get("expiry"), flush = True)
     return response
 
 

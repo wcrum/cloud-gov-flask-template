@@ -1,6 +1,7 @@
 import os
 import jwt
 import requests
+import time
 from flask import Blueprint
 from flask import request
 from flask import jsonify
@@ -20,7 +21,7 @@ def login():
     UAA_AUTHORIZE_URI = current_app.config["UAA_AUTHORIZE_URI"]
 
     session["USER_STATE"] = USER_STATE
-    
+
     UAA_LOGIN = f"{UAA_AUTHORIZE_URI}?client_id={CLIENT_ID}&response_type=code&redirect_uri={REDIRECT_URI}&state={USER_STATE}"
     
     return redirect(UAA_LOGIN)
@@ -64,7 +65,7 @@ def callback():
     header = jwt.get_unverified_header(token)
 
     session["claims"] = jwt.decode(token, header["alg"], options={"verify_signature": False})
-    session["expiry"] = response["expires_in"]
+    session["expiry"] = time.time() + (response["expires_in"] * 1000)
     session["refresh_token"] = response["refresh_token"]
     session["authenticated"] = True
 
