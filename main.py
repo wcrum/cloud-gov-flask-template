@@ -31,11 +31,15 @@ def create_app():
     app.register_blueprint(debug.bp, url_prefix="/debug")
     app.register_blueprint(auth.bp, url_prefix="/auth")
     app.register_blueprint(log.bp, url_prefix="/admin")
+
     
     return app
 
 app = create_app()
-engine = create_engine(app.config.get("DATABASE_URI"))
+with app.app_context():
+    from app.database import engine
+    app.engine = engine
+
 SQLModel.metadata.create_all(engine)
 
 if __name__ == "__main__":
