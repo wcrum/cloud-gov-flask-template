@@ -1,7 +1,6 @@
 import os
 import urllib
 import json
-from app.pages import create_pages
 
 def decode_env(env):
     _env = {}
@@ -16,7 +15,7 @@ def decode_env(env):
     return _env
 
 class Config(object):
-    PAGES = create_pages()
+    
     APP_DIRECTORY = os.getcwd() + "/app"
     TESTING = False
 

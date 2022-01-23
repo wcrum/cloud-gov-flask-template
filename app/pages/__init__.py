@@ -1,5 +1,5 @@
 import os
-import markdown
+import markdown2
 
 pages = {
     "/": []
@@ -9,18 +9,18 @@ pages_path = os.path.dirname(os.path.realpath(__file__))
 
 class Pages:
     def __init__(self):
-        self.pages = {}
+        self.routes = {}
 
     def add_page(self, page):
-        self.pages[page.meta["base_url"][0]] = page
+        self.routes[page.meta["base_url"]] = page
 
 class Page:
     def __init__(self, filename, contents):
-        self.md = markdown.Markdown(extensions = ['meta'])
         self.filename = filename
         self.contents = contents
-        self.html = self.md.convert(self.contents)
-        self.meta = self.md.Meta
+        self.html = markdown2.markdown(self.contents, extras=["tables", "metadata", "fenced-code-blocks"])
+        self.meta = self.html.metadata
+        print(self.meta)
 
 def create_pages():
     _pages = Pages()

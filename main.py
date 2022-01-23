@@ -8,7 +8,7 @@ from app.routes import default
 from app.routes import debug
 from app.routes import auth
 from app.routes import log
-
+from app.pages import create_pages
 from sqlmodel import SQLModel
 from sqlmodel import create_engine
 
@@ -36,6 +36,7 @@ def create_app():
     return app
 
 app = create_app()
+app.pages = create_pages()
 with app.app_context():
     from app.database import engine
     app.engine = engine

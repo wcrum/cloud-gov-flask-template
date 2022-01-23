@@ -16,11 +16,11 @@ bp = Blueprint('index', __name__)
 @bp.route("/")
 @bp.route("/<path:path>")
 def handle_posts(*args, **kwgs):
-    if request.path in current_app.config["PAGES"].pages:
+    if request.path in current_app.pages.routes:
         return render_template(
             "page.html",
             session = session,
-            markdown = current_app.config["PAGES"].pages[request.path].html
+            markdown = current_app.pages.routes[request.path].html
         )
 
     abort(404)
