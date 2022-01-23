@@ -36,6 +36,14 @@ def before_request():
                 data = data
             ).json()
 
+            token = response["access_token"]
+            header = jwt.get_unverified_header(token)
+
+            session["claims"] = jwt.decode(token, header["alg"], options={"verify_signature": False})
+            session["expiry"] = time.time() + (response["expires_in"] * 1000)
+            session["refresh_token"] = response["refresh_token"]
+            session["authenticated"] = True
+
 @bp.after_request
 def after_request(response):
     print(session.get("expiry"), flush = True)
