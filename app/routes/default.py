@@ -1,3 +1,5 @@
+import os
+import time
 import werkzeug
 from flask import Blueprint
 from flask import request
@@ -5,16 +7,23 @@ from flask import jsonify
 from flask import session
 from flask import render_template
 from flask import current_app
+from flask import abort
 from werkzeug.exceptions import HTTPException
 from flask import json
 
 bp = Blueprint('index', __name__)
 
-@bp.route('/')
-def index():
-    return render_template("index.html", 
-        sesssion = session
-    )
+@bp.route("/")
+@bp.route("/<path:path>")
+def handle_posts(*args, **kwgs):
+    if request.path in current_app.config["PAGES"].pages:
+        return render_template(
+            "page.html",
+            session = session,
+            markdown = current_app.config["PAGES"].pages[request.path].html
+        )
+
+    abort(404)
 
 @bp.before_request
 def before_request():
