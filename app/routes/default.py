@@ -36,6 +36,6 @@ def handle_exception(e):
         return response, e.code
     else:
         return render_template(
-            "404.html",
+            "error.html",
             error = e
         )
