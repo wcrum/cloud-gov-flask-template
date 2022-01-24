@@ -56,6 +56,7 @@ def before_request():
 def after_request(response):
     return response
 
+
 def handle_exception(e):
     if (handle_error := request.headers.get("X-Error-Type")) == "JSON":
         response = e.get_response()

@@ -7,13 +7,16 @@ from sqlmodel import Session as SQLSession
 from app.models.user import User
 from flask import current_app
 
+
 def admin_required(f):
     def wrapper(*args, **kwgs):
         user = session.get("user", {})
         if user.get("access") == "Administrator":
             return f(*args, **kwgs)
         return abort(401)
+
     return wrapper
+
 
 def login_required(f):
     def wrapper(*args, **kwgs):
@@ -21,4 +24,5 @@ def login_required(f):
         if user:
             return f(*args, **kwgs)
         return abort(401)
+
     return wrapper

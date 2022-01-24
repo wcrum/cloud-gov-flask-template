@@ -31,6 +31,7 @@ def drop_tables():
     # Check for $env:RESET_DATABASE and run this function if true
     meta.drop_all(engine, checkfirst=False)
 
+
 def update():
     # This is intended to keep the data but update the tables
     pass

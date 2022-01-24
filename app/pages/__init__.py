@@ -12,7 +12,7 @@ class Pages:
         self.unregistered_routes = {}
 
     def add_page(self, page):
-        
+
         if page.meta.get("base_url"):
             self.routes[page.meta["base_url"]] = page
         else:
