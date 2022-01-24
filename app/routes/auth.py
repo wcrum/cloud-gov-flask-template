@@ -11,6 +11,7 @@ from flask import session
 from urllib.parse import unquote
 from base64 import b64encode
 
+
 bp = Blueprint("auth", __name__)
 
 

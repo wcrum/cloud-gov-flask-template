@@ -23,8 +23,6 @@ class Page:
         )
         self.meta = self.html.metadata
         self.toc_html = self.html.toc_html
-        print(self.meta)
-        print(self.meta)
 
 
 def create_pages():
