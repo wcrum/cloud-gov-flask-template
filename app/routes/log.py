@@ -10,5 +10,4 @@ bp = Blueprint("admin", __name__)
 
 @bp.route("/logs")
 def index():
-    print(session)
     return render_template("log.html", sesssion=session)

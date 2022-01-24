@@ -18,5 +18,3 @@ Open Source Software is the future of development across DoD technical organizat
 - Operation Code
 - Joint Software Alliance (JSOFT)
 - Marine Coders
-
-> Code and Design by William Crum

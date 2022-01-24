@@ -8,29 +8,33 @@
             <div class="modal-body mt-3 mb-3">
                 <div class="container">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-6 me-5">
                             <form>
                                 <div class="mb-3">
                                     <div class="input-group mb-3">
                                         <span disabled class="input-group-text" id="inputGroup-sizing-sm">Name</span>
-                                        <input disabled placeholder="{{ session.claims['user_name'] }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                                      </div>
+                                        <input disabled placeholder="{{ session.claims['user_name'] }}" type="text"
+                                            class="form-control" aria-label="Sizing example input"
+                                            aria-describedby="inputGroup-sizing-sm">
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <div class="mb-3">
                                         <div class="input-group mb-3">
-                                            <span disabled class="input-group-text" id="inputGroup-sizing-sm">Email Address</span>
-                                            <input disabled placeholder="{{ session.claims['email'] }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                                          </div>
+                                            <span disabled class="input-group-text" id="inputGroup-sizing-sm">Email
+                                                Address</span>
+                                            <input disabled placeholder="{{ session.claims['email'] }}" type="text"
+                                                class="form-control" aria-label="Sizing example input"
+                                                aria-describedby="inputGroup-sizing-sm">
+                                        </div>
                                     </div>
                                     <div id="emailHelp" class="form-text"><small>
-                                        Information provided by cloud.gov
-                                    </small>
+                                            Information provided by cloud.gov
+                                        </small>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div class="col"></div>
                         <div class="col-4">
                             <div class="row">
                                 <p class="fw-bold">

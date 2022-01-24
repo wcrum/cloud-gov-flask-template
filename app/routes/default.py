@@ -19,9 +19,7 @@ bp = Blueprint("index", __name__)
 def handle_posts(*args, **kwgs):
     if request.path in current_app.pages.routes:
         return render_template(
-            "page.html",
-            session=session,
-            page=current_app.pages.routes[request.path]
+            "page.html", session=session, page=current_app.pages.routes[request.path]
         )
 
     abort(404)

@@ -8,7 +8,6 @@ def test_index(client):
 
     assert request.base_url == current_app.config["UAA_AUTHORIZE_URI"]
 
-    print(request.base_url)
     response = client.post(
         request.base_url,
         data={
@@ -17,5 +16,3 @@ def test_index(client):
         },
         follow_redirects=True,
     )
-
-    print(response)

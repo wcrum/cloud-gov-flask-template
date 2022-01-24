@@ -67,7 +67,6 @@ def callback():
     session["claims"] = jwt.decode(
         token, header["alg"], options={"verify_signature": False}
     )
-    print(session["claims"])
     session["expiry"] = time.time() + (response["expires_in"] * 1000)
     session["refresh_token"] = response["refresh_token"]
     session["authenticated"] = True
