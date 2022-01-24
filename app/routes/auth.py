@@ -70,9 +70,10 @@ def callback():
     response = requests.post(UAA_TOKEN_URI, data=data)
 
     if response.status_code != 200:
-        return abort(response.status_code)
+        abort(response.status_code)
 
-    response = respone.json()
+    response = response.json()
+    
 
     token = response["access_token"]
     header = jwt.get_unverified_header(token)
@@ -97,14 +98,15 @@ def callback():
         else:
             # Account does not exist
             new_user = User(
-                user_name=session["claims"]["user_name"],
-                email=session["claims"]["email"],
-                last_logon=datetime.now(),
+                user_name = session["claims"]["user_name"],
+                email = session["claims"]["email"],
+                last_logon = datetime.now()
             )
             s.add(new_user)
             s.commit()
-
+        
         user = s.exec(query).first()
+        print(user)
         session["user"] = user.dict()
-
+    
     return redirect("/")
