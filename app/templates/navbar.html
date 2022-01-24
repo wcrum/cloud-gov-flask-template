@@ -27,13 +27,14 @@
                     <li>
                         <h6 class="dropdown-header">{{ session.claims['email'] }}</h6>
                     </li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li><a class="dropdown-item" href="/auth/logout">Sign out</a></li>
                 </ul>
             </div>
+            {% include '/modals/profile.html' %}
             {% else %}
             <div class="col-md-3 text-end">
                 <a class="btn btn-outline-primary" href="/auth/login" role="button">Login</a>

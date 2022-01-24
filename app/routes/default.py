@@ -21,7 +21,7 @@ def handle_posts(*args, **kwgs):
         return render_template(
             "page.html",
             session=session,
-            markdown=current_app.pages.routes[request.path].html,
+            page=current_app.pages.routes[request.path]
         )
 
     abort(404)

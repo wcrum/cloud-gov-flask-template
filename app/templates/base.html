@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html class="h-100" lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,10 +11,18 @@
         <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
         <script src="{{ url_for('static', filename='jdenticon.min.js') }}"></script>
     </head>
-    <body>
-        {% include 'navbar.html' %}
+    <body class="d-flex flex-column h-100">
+        <header>    
+            {% include 'navbar.html' %}
+        </header>
 
-        {% block content %}
-        {% endblock %}
+        <main class="flex-shring-0 mt-5 mb-5">
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer class="footer mt-auto py-3 bg-light">
+            {% include 'footer.html' %}
+        </footer>
     </body>
 </html>

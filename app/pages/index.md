@@ -4,6 +4,7 @@ Summary: Template cloud.gov Application
 Authors: William Crum
 Date: January 23, 2022
 base_url: /
+show_toc: False
 ---
 
 # Welcome to a Flask Template

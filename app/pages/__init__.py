@@ -19,9 +19,11 @@ class Page:
         self.filename = filename
         self.contents = contents
         self.html = markdown2.markdown(
-            self.contents, extras=["tables", "metadata", "fenced-code-blocks"]
+            self.contents, extras=["tables", "metadata", "fenced-code-blocks", "toc"]
         )
         self.meta = self.html.metadata
+        self.toc_html = self.html.toc_html
+        print(self.meta)
         print(self.meta)
 
 
