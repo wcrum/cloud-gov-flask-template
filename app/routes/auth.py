@@ -1,7 +1,8 @@
 import os
 import jwt
-import requests
 import time
+import requests
+from flask import abort
 from flask import Blueprint
 from flask import request
 from flask import jsonify
@@ -10,7 +11,10 @@ from flask import current_app
 from flask import session
 from urllib.parse import unquote
 from base64 import b64encode
-
+from datetime import datetime
+from sqlmodel import select
+from sqlmodel import Session as SQLSession
+from app.models.user import User
 
 bp = Blueprint("auth", __name__)
 
@@ -49,6 +53,9 @@ def callback():
     code = request.args.get("code")
     state = request.args.get("state")
 
+    if not code or not state:
+        abort(400)
+
     UAA_TOKEN_URI = current_app.config["UAA_TOKEN_URI"]
 
     data = {
@@ -72,4 +79,27 @@ def callback():
     session["refresh_token"] = response["refresh_token"]
     session["authenticated"] = True
 
+    with SQLSession(current_app.engine) as s:
+        query = select(User).where(User.email == session["claims"]["email"])
+        user = s.exec(query).first()
+
+        if user:
+            # Account exists
+            user.last_logon = datetime.now()
+            s.add(user)
+            s.commit()
+
+        else:
+            # Account does not exist
+            new_user = User(
+                user_name = session["claims"]["user_name"],
+                email = session["claims"]["email"],
+                last_logon = datetime.now()
+            )
+            s.add(new_user)
+            s.commit()
+        
+        user = s.exec(query).first()
+        session["user"] = user.dict()
+    
     return redirect("/")

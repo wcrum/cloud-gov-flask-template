@@ -14,8 +14,7 @@
                                     <div class="input-group mb-3">
                                         <span disabled class="input-group-text" id="inputGroup-sizing-sm">Name</span>
                                         <input disabled placeholder="{{ session.claims['user_name'] }}" type="text"
-                                            class="form-control" aria-label="Sizing example input"
-                                            aria-describedby="inputGroup-sizing-sm">
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -24,13 +23,22 @@
                                             <span disabled class="input-group-text" id="inputGroup-sizing-sm">Email
                                                 Address</span>
                                             <input disabled placeholder="{{ session.claims['email'] }}" type="text"
-                                                class="form-control" aria-label="Sizing example input"
-                                                aria-describedby="inputGroup-sizing-sm">
+                                                class="form-control">
                                         </div>
                                     </div>
                                     <div id="emailHelp" class="form-text"><small>
                                             Information provided by cloud.gov
                                         </small>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="input-group mb-3">
+                                        <span disabled class="input-group-text" id="inputGroup-sizing-sm">Account Type</span>
+                                        <input disabled placeholder="{{ session['user'].access }}" type="text" class="form-control">
+                                    </div>
+                                    <div id="emailHelp" class="form-text"><small>
+                                        Last Logon: {{ session['user'].last_logon }}
+                                    </small>
                                     </div>
                                 </div>
                             </form>
@@ -51,7 +59,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

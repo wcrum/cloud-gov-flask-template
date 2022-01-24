@@ -7,7 +7,7 @@ from app import config
 from app.routes import default
 from app.routes import debug
 from app.routes import auth
-from app.routes import log
+from app.routes import admin
 from app.pages import create_pages
 from sqlmodel import SQLModel
 from sqlmodel import create_engine
@@ -27,7 +27,8 @@ def create_app():
     app.register_blueprint(default.bp)
     app.register_blueprint(debug.bp, url_prefix="/debug")
     app.register_blueprint(auth.bp, url_prefix="/auth")
-    app.register_blueprint(log.bp, url_prefix="/admin")
+    app.register_blueprint(admin.bp, url_prefix="/admin")
+    app.register_error_handler(Exception, default.handle_exception)
 
     return app
 

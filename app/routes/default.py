@@ -8,7 +8,6 @@ from flask import session
 from flask import render_template
 from flask import current_app
 from flask import abort
-from werkzeug.exceptions import HTTPException
 from flask import json
 
 bp = Blueprint("index", __name__)
@@ -55,11 +54,8 @@ def before_request():
 
 @bp.after_request
 def after_request(response):
-    print(session.get("expiry"), flush=True)
     return response
 
-
-@bp.app_errorhandler(HTTPException)
 def handle_exception(e):
     if (handle_error := request.headers.get("X-Error-Type")) == "JSON":
         response = e.get_response()

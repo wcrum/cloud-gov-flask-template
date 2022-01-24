@@ -19,6 +19,7 @@ def decode_env(env):
 class Config(object):
 
     APP_DIRECTORY = os.getcwd() + "/app"
+    PROPAGATE_EXCEPTIONS = False
     TESTING = False
 
 

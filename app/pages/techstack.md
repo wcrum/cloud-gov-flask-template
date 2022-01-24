@@ -1,5 +1,5 @@
 ---
-Title: Index
+Title: Techstack
 Summary: Template cloud.gov Application
 Authors: William Crum
 Date: January 23, 2022
@@ -22,7 +22,5 @@ The backend is written in Python and Flask with SQLModel as the ORM, using AWS R
 This template utilizes Gunicorn Web Server Gateway Interface for the production application. I used PyMySQL for the driver, for larger production application see [openstack.org driver evaluation](https://wiki.openstack.org/wiki/PyMySQL_evaluation) to see which driver works best for you.
 
 ### Technologies and Reasoning
-| Tech | Reasoning |
-| ------------- | ------------- |
-| Flask | I ended up using Flask because I knew it had capabilities as an API and a server side render, FastAPI is a good alternative if you compile / serve the Front End Seperatly, for the scope of this project it just fit best |
-| SQLModel | SQLModel is a mix between SQLAlchemy and Pydantic, it saves the hassle of confusing types between the database and the backend |
+**Flask**: I ended up using Flask because I knew it had capabilities as an API and a server side render, FastAPI is a good alternative if you compile / serve the Front End Seperatly, for the scope of this project it just fit best |
+**SQLModel** SQLModel is a mix between SQLAlchemy and Pydantic, it saves the hassle of confusing types between the database and the backend
