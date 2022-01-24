@@ -16,6 +16,17 @@ from app.models.user import Log, User
 
 APP_SETTINGS = os.getenv("APP_SETTINGS", "Testing")
 
+def drop_database(config):
+    import sqlalchemy
+    from sqlalchemy import create_engine
+    from sqlalchemy import MetaData
+    from sqlalchemy import inspect
+    from sqlalchemy.orm import sessionmaker
+    from sqlalchemy.ext.declarative import declarative_base
+    engine = create_engine(config["DATABASE_URI"])
+    meta = MetaData()
+    meta.reflect(bind=engine)
+    meta.drop_all(engine, checkfirst=False)
 
 def create_app():
     app = Flask(__name__, template_folder="app/templates/", static_folder="app/static/")
@@ -39,6 +50,9 @@ with app.app_context():
     from app.database import engine
 
     app.engine = engine
+
+if os.getenv("DROP_DATABASE", False):
+    drop_database(app.config)
 
 SQLModel.metadata.create_all(engine)
 

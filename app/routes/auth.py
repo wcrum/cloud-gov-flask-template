@@ -100,6 +100,7 @@ def callback():
             s.commit()
         
         user = s.exec(query).first()
+        print(user)
         session["user"] = user.dict()
     
     return redirect("/")
