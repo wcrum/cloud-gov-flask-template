@@ -12,7 +12,6 @@ def render_markdown(template_name, file=None, **context):
 
     env = jinja2.Environment(loader=jinja2.BaseLoader(), auto_reload=True)
     template = env.from_string(str(page.html))
-    print(context["time"])
     page.html = template.render(**context)
 
     rendered = render_template(template_name, page=page, **context)
