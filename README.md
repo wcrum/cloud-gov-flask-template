@@ -4,6 +4,7 @@
 Template intended for use at cloud.gov
 
 ![Known Vulnerabilities](https://snyk.io/test/github/elisoncrum/cloud-gov-flask-template/badge.svg)
+![Lines of Code](https://tokei.rs/b1/github/elisoncrum/cloud-gov-flask-template?category=code)
 
 # Important Links
 - https://cloud.gov/docs - Primary Documentation for cloud.gov
