@@ -5,6 +5,7 @@ Authors: William Crum
 Date: January 23, 2022
 show_toc: True
 ---
+
 ## How was it built?
 
 ### Pages
@@ -22,16 +23,20 @@ The backend is written in Python and Flask with SQLModel as the ORM, using AWS R
 This template utilizes Gunicorn Web Server Gateway Interface for the production application. I used PyMySQL for the driver, for larger production application see [openstack.org driver evaluation](https://wiki.openstack.org/wiki/PyMySQL_evaluation) to see which driver works best for you.
 
 ### Technologies and Reasoning
-**Flask**: I ended up using Flask because I knew it had capabilities as an API and a server side render, FastAPI is a good alternative if you compile / serve the Front End Seperatly, for the scope of this project it just fit best |
+**Flask**: I ended up using Flask because I knew it had capabilities as an API and a server side render, FastAPI is a good alternative if you compile / serve the Front End Seperatly, for the scope of this project it just fit best
+
 **SQLModel** SQLModel is a mix between SQLAlchemy and Pydantic, it saves the hassle of confusing types between the database and the backend
 
 
 [![](https://github-readme-stats.vercel.app/api/pin/?username=elisoncrum&repo=cloud-gov-flask-template)](https://github.com/elisoncrum/cloud-gov-flask-template)
 
-```python
-def add_two_numbers(x: int, y: int) -> int:
-    return x + y
+## Frontend Development
+Out of everything I have developed, frontend is by far my worst enemy. Having a client side rendered application if you are looking for an application to be more "reactive." Use it. I decided to use Jinja2 alongside Bootstrap 5 and other libraries to help me get the intended template.
 
-a = add_two_numbers(5, 10)
-print(a)
+### Code Highlighthing
+Code highlighting is one of those things that is appreciated when you dont realize you are looking at it. I personally hated looking at unstyled code. Using Markdown2 and the extension `fenced-code-block` you can achieve just the same.
+
+```python
+def add_numbers(x: int, y: int) ->:
+    return x + y
 ```

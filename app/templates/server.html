@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-xxl">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Flask Statistics</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Since {{ time }}</h6>
+    
+                    <hr class="bg-danger border-2 border-top border-secondary">
+    
+                    <div class="d-grid gap-3">
+                        <div>
+                            <button type="button" class="btn btn-outline-primary">
+                                Requests <span class="badge bg-secondary">{{ requests }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Database Statistics</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">MySQL</h6>
+
+                    <hr class="bg-danger border-2 border-top border-secondary">
+
+                    <div class="d-grid gap-3">
+                        <div>
+                            <button type="button" class="btn btn-outline-primary">
+                                Admins <span class="badge bg-secondary">{{ admins }}</span>
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-primary">
+                                Users <span class="badge bg-secondary">{{ users }}</span>
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-primary">
+                                Logs <span class="badge bg-secondary">?</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Server Statistics</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ url_root }}</h6>
+
+                    <hr class="bg-danger border-2 border-top border-secondary">
+
+                    <div class="d-grid gap-2">
+
+                        <small class="text-muted mb-0">Central Processing Unit</small>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ cpu }}%"
+                                aria-valuenow="{{ cpu }}" aria-valuemin="0" aria-valuemax="100">{{ cpu }}</div>
+                        </div>
+                        <small class="text-muted mb-0">Random Access Memory</small>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ ram }}%"
+                                aria-valuenow="{{ ram }}" aria-valuemin="0" aria-valuemax="100">{{ ram }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

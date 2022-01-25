@@ -12,7 +12,11 @@ from flask import json
 from app.utils import render_markdown
 from datetime import datetime
 from base64 import b64encode
+from sqlmodel import select
+from sqlmodel import Session as SQLSession
+from app.models.user import User
 import jinja2
+import psutil
 
 bp = Blueprint("index", __name__)
 
@@ -31,6 +35,31 @@ def techstack(*args, **kwgs):
 
     return render_markdown(
         "page.html", file="techstack.md", session=session, time=datetime.now()
+    )
+
+    abort(404)
+
+@bp.route("/server")
+def server(*args, **kwgs):
+
+    with SQLSession(current_app.engine) as s:
+        query_admins = select(User).where(User.access == "Administrator")
+        query_users = select(User).where(User.access == "User")
+        admins = len(s.exec(query_admins).all())
+        users = len(s.exec(query_users).all())
+
+    data = {
+        "admins": admins,
+        "users": users,
+        "requests": current_app.count_requests,
+        "time": datetime.now(),
+        "cpu": psutil.cpu_percent(),
+        "ram": psutil.virtual_memory().percent,
+        "url_root": request.url_root
+    }
+    return render_template(
+        "server.html",
+        **data
     )
 
     abort(404)
@@ -66,6 +95,7 @@ def before_request():
 
 @bp.after_request
 def after_request(response):
+    current_app.count_requests += 1
     return response
 
 

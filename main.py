@@ -34,6 +34,7 @@ def drop_database(config):
 
 def create_app():
     app = Flask(__name__, template_folder="app/templates/", static_folder="app/static/")
+    app.count_requests = 0
 
     app.config.from_object(f"app.config.{APP_SETTINGS}")
     app.secret_key = os.urandom(256)
