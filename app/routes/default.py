@@ -9,6 +9,10 @@ from flask import render_template
 from flask import current_app
 from flask import abort
 from flask import json
+from app.utils import render_markdown
+from datetime import datetime
+from base64 import b64encode
+import jinja2
 
 bp = Blueprint("index", __name__)
 
@@ -16,10 +20,18 @@ bp = Blueprint("index", __name__)
 @bp.route("/")
 @bp.route("/<path:path>")
 def handle_posts(*args, **kwgs):
-    if request.path in current_app.pages.routes:
-        return render_template(
-            "page.html", session=session, page=current_app.pages.routes[request.path]
-        )
+    if request.path in current_app.pages.registered:
+        return render_markdown("page.html", session=session)
+
+    abort(404)
+
+
+@bp.route("/techstack")
+def techstack(*args, **kwgs):
+
+    return render_markdown(
+        "page.html", file="techstack.md", session=session, time=datetime.now()
+    )
 
     abort(404)
 
@@ -58,17 +70,11 @@ def after_request(response):
 
 
 def handle_exception(e):
-    if (handle_error := request.headers.get("X-Error-Type")) == "JSON":
-        response = e.get_response()
-        # replace the body with JSON
-        response.data = json.dumps(
-            {
-                "code": e.code,
-                "name": e.name,
-                "description": e.description,
-            }
-        )
-        response.content_type = "application/json"
-        return response, e.code
-    else:
-        return render_template("error.html", error=e)
+    print(dir(e))
+    try:
+        e.code
+    except Exception:
+        e.code = 500
+        e.name = "Internal Server Error: {}".format(type(e).__name__)
+        e.description = "{}".format(b64encode(str(e).encode("ascii")).decode("utf-8"))
+    return render_template("error.html", error=e)

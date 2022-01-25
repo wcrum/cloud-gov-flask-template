@@ -15,6 +15,7 @@ def admin_required(f):
             return f(*args, **kwgs)
         return abort(401)
 
+    wrapper.__name__ = f.__name__
     return wrapper
 
 

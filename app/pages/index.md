@@ -9,7 +9,7 @@ show_toc: False
 
 # Welcome to a Flask Template
 
-This website and code base focuses on demoing a basic server side renders full stack application within the [cloud.gov](https://www.cloud.gov) application factory and cloud.gov User Authentication and Authorization (UAA).
+This and code base on demoing a basic server side renders full stack application within the [cloud.gov](https://www.cloud.gov) application factory and cloud.gov User Authentication and Authorization (UAA).
 
 ## Organizations and Communities
 

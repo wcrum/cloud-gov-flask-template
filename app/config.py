@@ -17,20 +17,18 @@ def decode_env(env):
 
 
 class Config(object):
-
+    TEMPLATES_AUTO_RELOAD = True
     APP_DIRECTORY = os.getcwd() + "/app"
-    PROPAGATE_EXCEPTIONS = False
     TESTING = False
 
 
 class Production(Config):
     PORT = 8080
-    ENV = decode_env(os.environ)
-
-    CLIENT_ID = ENV.get("client_id")
-    CLIENT_SECRET = ENV.get("client_secret")
-    VCAP_APPLICATION = ENV.get("VCAP_APPLICATION")
-    VCAP_SERVICES = ENV.get("VCAP_SERVICES")
+    LOCAL_ENV = decode_env(os.environ)
+    CLIENT_ID = LOCAL_ENV.get("client_id")
+    CLIENT_SECRET = LOCAL_ENV.get("client_secret")
+    VCAP_APPLICATION = LOCAL_ENV.get("VCAP_APPLICATION")
+    VCAP_SERVICES = LOCAL_ENV.get("VCAP_SERVICES")
 
     if VCAP_SERVICES:
         DATABASE_HOST = VCAP_SERVICES["aws-rds"][0]["credentials"]["host"]
@@ -47,9 +45,11 @@ class Production(Config):
 
 
 class Testing(Config):
+    TEMPLATES_AUTO_RELOAD = True
     TESTING = True
     HOST = "localhost"
     PORT = 8000
+    LOCAL_ENV = decode_env(os.environ)
 
     CLIENT_ID = "my_client_id"
     CLIENT_SECRET = "my_client_secret"

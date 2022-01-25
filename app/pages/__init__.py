@@ -8,15 +8,15 @@ pages_path = os.path.dirname(os.path.realpath(__file__))
 
 class Pages:
     def __init__(self):
-        self.routes = {}
-        self.unregistered_routes = {}
+        self.registered = {}
+        self.unregistered = {}
 
     def add_page(self, page):
 
         if page.meta.get("base_url"):
-            self.routes[page.meta["base_url"]] = page
+            self.registered[page.meta["base_url"]] = page
         else:
-            self.unregistered_routes[page.filename] = page
+            self.unregistered[page.filename] = page
 
 
 class Page:
@@ -25,7 +25,7 @@ class Page:
         self.filename = os.path.basename(path)
         self.contents = contents
         self.html = markdown2.markdown(
-            self.contents, extras=["tables", "metadata", "fenced-code-blocks", "toc"]
+            contents, extras=["fenced-code-blocks", "metadata", "toc"]
         )
         self.meta = self.html.metadata
         self.toc_html = self.html.toc_html

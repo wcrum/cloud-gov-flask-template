@@ -6,5 +6,5 @@ Date: January 23, 2022
 show_toc: False
 ---
 
-# Admin Dashboard
+# Welcome {{session.claims['user_name']}}
 Welcome to the authenticated side of things...
